@@ -1,0 +1,96 @@
+.__containerCreate {
+    
+}
+
+.__forms {
+    margin-bottom:20px;
+    display:block;
+    .__forms--fields {
+        margin-bottom:20px;
+        display:flex;
+        flex-direction:column;
+        label {
+            display:block;
+            margin-bottom:10px;
+            font-size:12px;
+        }
+        .__forms--fields--wrapper {
+            display:flex;
+            justify-content: flex-start;
+            input,select,textarea {
+                width:96%;
+                padding:5px;
+                border:1px solid #ccc;
+                border-radius:5px;
+                outline:none;
+            }
+            .__removeButton {
+                margin-left:3%;
+                width:30px;
+                height:30px;
+                background-color:transparent;
+                border:0px;
+                outline:none;
+                background-image:url('../../assets/images/remove_trash.png');
+                background-size:25px auto;
+                background-repeat:no-repeat;
+                background-position:center center;
+            }
+        }
+        
+
+    }
+    .__forms--button {
+        margin-top:20px;
+        display:flex;
+        justify-content: flex-start;
+        margin:2px;
+        button {
+            margin-right:20px;
+            width:200px;
+            padding:10px;
+            border:0px;
+            border-radius:5px;
+            outline:none;
+            background-color:#ccc;
+            color:#fff;
+            cursor:pointer;
+            &:hover {
+                background-color:#aaa;
+            }
+        }
+    }
+}
+
+.__listForms {
+    display:flex;
+    flex-direction: column;
+    margin-top:40px;
+    margin-bottom:20px;
+    .__listForms--container {
+        border:1px solid #eee;
+        padding:20px;
+        position:relative;
+        font-weight:bold;
+        .__listForms--remove {
+            position:absolute;
+            right:10px;
+            display:flex;
+            justify-content: center;
+            width:30px;
+            height:50%;
+            background-color:transparent;
+            border:0px;
+            outline:none;
+            background-image:url('../../assets/images/remove_trash.png');
+            background-size:25px auto;
+            background-repeat:no-repeat;
+            background-position:center center;
+            cursor:pointer;
+        }
+    }
+    h4 {
+        display:block;
+        text-align:center;
+    }
+}

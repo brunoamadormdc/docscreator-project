@@ -1,0 +1,156 @@
+.__dataWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.__selectWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:60%;
+    margin-bottom: 20px;
+    .--title {
+        text-align:center;
+        font-weight:bold;
+    }
+    select {
+        width:100%;
+        padding:5px;
+        border:1px solid #ccc;
+        border-radius:5px;
+        outline:none;
+    }
+}
+.__forms {
+    margin-bottom:20px;
+    display:block;
+    .__forms--fields {
+        margin-bottom:20px;
+        display:flex;
+        flex-direction:column;
+        label {
+            display:block;
+            margin-bottom:10px;
+            font-size:12px;
+        }
+        .__forms--fields--wrapper {
+            display:flex;
+            justify-content: flex-start;
+            input,select,textarea {
+                width:96%;
+                padding:5px;
+                border:1px solid #ccc;
+                border-radius:5px;
+                outline:none;
+            }
+            .__removeButton {
+                margin-left:3%;
+                width:30px;
+                height:30px;
+                background-color:transparent;
+                border:0px;
+                outline:none;
+                background-image:url('../../assets/images/remove_trash.png');
+                background-size:25px auto;
+                background-repeat:no-repeat;
+                background-position:center center;
+            }
+        }
+        
+
+    }
+    .__forms--button {
+        margin-top:20px;
+        display:flex;
+        justify-content: flex-start;
+        margin:2px;
+        button {
+            margin-right:20px;
+            width:200px;
+            padding:10px;
+            border:0px;
+            border-radius:5px;
+            outline:none;
+            background-color:#ccc;
+            color:#fff;
+            cursor:pointer;
+            &:hover {
+                background-color:#aaa;
+            }
+        }
+    }
+}
+
+.__listForms {
+    display:flex;
+    flex-direction: column;
+    margin-top:40px;
+    margin-bottom:20px;
+    .__listForms--container {
+        border:1px solid #eee;
+        padding:20px;
+        position:relative;
+        font-weight:bold;
+        .__listForms--remove {
+            position:absolute;
+            right:10px;
+            display:flex;
+            justify-content: center;
+            width:30px;
+            height:50%;
+            background-color:transparent;
+            border:0px;
+            outline:none;
+            background-image:url('../../assets/images/remove_trash.png');
+            background-size:25px auto;
+            background-repeat:no-repeat;
+            background-position:center center;
+            cursor:pointer;
+        }
+    }
+    h4 {
+        display:block;
+        text-align:center;
+    }
+}
+
+.__fieldDataWrapper {
+    margin-top:60px;
+    width:100%;
+    align-items:center;
+    .__dataContainer {
+        width:100%;
+        display:flex;
+        align-items:center;
+        border:1px solid #eee;
+        padding:10px;
+        cursor:pointer;
+        position:relative;
+        margin-bottom:10px;
+        
+        .__dataContainer--remove {
+            position:absolute;
+            right:30px;
+            top:5px;
+            width:20px;
+            height:20px;
+            .__removeButton {
+                margin-left:3%;
+                width:30px;
+                height:30px;
+                background-color:transparent;
+                border:0px;
+                outline:none;
+                background-image:url('../../assets/images/remove_trash.png');
+                background-size:25px auto;
+                background-repeat:no-repeat;
+                background-position:center center;
+            }
+        }
+    }
+    .__dataContainer--fields {
+        padding:20px;
+        background-color:rgb(250, 250, 250);
+    }
+}
