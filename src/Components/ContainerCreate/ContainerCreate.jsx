@@ -1,7 +1,7 @@
 import styles from './ContainerCreate.module.scss'
 import useContainer from '../../hooks/useContainer';
 import AddForm from '../AddForm/AddForm';
-
+import { Container } from '@chakra-ui/react'
 
 export default function ContainerCreate() {
 
@@ -9,15 +9,15 @@ export default function ContainerCreate() {
 
     return (
         <>
-            <div className={styles['__containerCreate']} >
+            <Container maxW='container.lg' centerContent>
                 <AddForm addRow={addRow} />
-                <div className={styles['__containerCreate--wrapper']}>
+                
                     {container.wrapper != null ? container.wrapper : null}
-                </div>
-                <div className={styles['__containerCreate--wrapper']}>
+                
+               
                     {container.listFormswrapper != null ? container.listFormswrapper : null}
-                </div>
-            </div>
+               
+            </Container>
         </>
     )
 

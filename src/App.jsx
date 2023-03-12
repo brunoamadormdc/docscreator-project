@@ -7,9 +7,9 @@ function App() {
   return (
     <>
       <Sidebar />
-      <div className={`container-fluid ${Styles['__app']}`}>
+      
         <Router />
-      </div>
+     
       
     </>
 

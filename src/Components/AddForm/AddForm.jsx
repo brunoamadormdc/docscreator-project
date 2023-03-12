@@ -1,5 +1,6 @@
 import styles from './AddForm.module.scss'
 import { useRef } from 'react'
+import { Container, SimpleGrid, Box, Select, Input, Button, Center } from '@chakra-ui/react'
 
 const selectValues = [
     { label: 'Texto', value: 'text' },
@@ -15,48 +16,55 @@ export default function AddForm({ addRow }) {
 
     const submitRow = (e) => {
         e.preventDefault()
-        
-        if(nameRef.current.value === '' || typeRef.current.value === '' || columnsRef.current.value === '' ) return alert('Preencha todos os campos')
 
-       
+        if (nameRef.current.value === '' || typeRef.current.value === '' || columnsRef.current.value === '') return alert('Preencha todos os campos')
 
         addRow({
             name: nameRef.current.value,
-            type: typeRef.current.value,    
+            type: typeRef.current.value,
             columns: columnsRef.current.value
-        }) 
+        })
     }
 
     return (
         <>
-            <div className={`container ${styles['__addFormContainer']}`}>
+            <Container maxW="container.lg">
+                <Box padding="5">
                 <form onSubmit={submitRow}>
-                    <div className={styles['__addFormContainer--row']}>
-                        <div className={`${styles['__fields']} ${styles['__inputs']}`}>
-                            <label>Nome</label>
-                            <input type="text" ref={nameRef} />
-                        </div>
-                        <div className={`${styles['__fields']} ${styles['__inputs']}`}>
-                            <label>Tipo</label>
-                            <select ref={typeRef}>
+                    <SimpleGrid columns={4} spacing={10}>
+
+                        <Box>
+
+                            <Input focusBorderColor={'teal.100'} type='text' placeholder="Nome" variant="flushed" ref={nameRef} />
+
+                        </Box>
+                        <Box>
+
+                            <Select focusBorderColor={'teal.500'} variant='flushed' ref={typeRef} placeholder='Tipo'>
                                 {selectValues.map((item) => {
                                     return (
                                         <option key={item.value} value={item.value}>{item.label}</option>
                                     )
                                 })}
-                            </select>
-                        </div>
-                        <div className={`${styles['__fields']} ${styles['__inputs']}`}>
-                            <label>Colunas</label>
-                            <input type="number" ref={columnsRef} />
-                        </div>
-                        <div className={`${styles['__fields']} ${styles['__submit']}`}>
-                            <button type="submit">Adicionar</button>
-                        </div>
-                    </div>
+                            </Select>
 
+                        </Box>
+                        <Box>
+                            <Input focusBorderColor={'teal.500'} type='number' placeholder="Colunas" variant="flushed" ref={columnsRef} />
+
+                        </Box>
+                        <Box>
+                            <Center>
+                            <Button  type='submit' colorScheme='teal' size='md'>
+                                Adicionar
+                            </Button>
+                            </Center>
+                        </Box>
+
+                    </SimpleGrid>
                 </form>
-            </div>
+                </Box>
+            </Container>
         </>
     );
 }

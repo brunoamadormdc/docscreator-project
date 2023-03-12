@@ -1,4 +1,6 @@
-import Title from "../Components/UI/Title";
+import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
+import { Box, Button, Container, IconButton, Input, SimpleGrid, Text, Flex, Textarea, Heading } from "@chakra-ui/react";
+
 
 export class ContainerFieldsFactory {
     constructor(name) {
@@ -16,7 +18,7 @@ export class ContainerFieldsFactory {
         this.listFormswrapper = null;
         this.container_func = null
         this.styles = null
-        
+
     }
 
     insertFunctions(key, func) {
@@ -64,24 +66,41 @@ export class ContainerFieldsFactory {
     createListformswrapper() {
         return (
             <>
-                <div className={`${this.styles['__listForms']} container`}>
-                    {this.setForms.length > 0 ?
 
-                       <Title title={'Formulários'} subtitle={'Lista de formulários'}></Title>
+                {this.setForms.length > 0 ?
 
-                        : null}
-                    {this.setForms.length > 0 ?
+                    <Container maxW={'container.lg'} p={'10'} centerContent>
+                        <SimpleGrid columns={1} spacing={3}>
+                            <Box>
+                                <Heading as='h3' textAlign={'center'} fontSize={'30px'} size='2xl' noOfLines={2}>Formulários Criados</Heading>
+                            </Box>
+                            <Box>
+                                <Heading as='h5' textAlign={'center'} fontSize={'18px'} fontWeight={'normal'} size='2xl' noOfLines={2}>Veja abaixo os formulários já criados</Heading>
+                            </Box>
+                        </SimpleGrid>
+                    </Container>
+                    : null}
+                {this.setForms.length > 0 ?
 
 
-                        <div className={`row`}>
-                            {this.setForms.map((form) => <div className={`${this.styles['__listForms--container']} row`} key={form.id}>
-                                <div className={this.styles['__listForms--remove']} onClick={()=> this.removeSet(form.id)}></div>
-                                {form.name}
-                            </div>)}
-                        </div>
+                    <Container maxW={'container.lg'} marginBottom={'10'} >
 
-                        : null}
-                </div>
+                        {this.setForms.map((form) =>
+                            <Flex bg={'teal'} color={'white'} p={3} align={'center'} borderRadius={'5px'} paddingStart={'10'} marginBottom={'3'}>
+                                <Box width={'95%'} key={form.id}>
+
+                                    <Text fontSize={'20px'}>{form.name}</Text>
+                                </Box>
+                                <Box width={'5%'}>
+                                    <IconButton colorScheme={'red'} size={'sm'} icon={<MinusIcon />} onClick={() => this.removeSet(form.id)} />
+
+                                </Box>
+                            </Flex>
+                        )}
+                    </Container>
+
+                    : null}
+
 
             </>
         )
@@ -89,76 +108,69 @@ export class ContainerFieldsFactory {
 
     createWrapper() {
         return (
-            <div className={`container`}>
+            <Container maxW="container.lg" bg='teal.50' border={'1px solid teal'} borderRadius={'5px'}>
+                <Box padding="4">
+                    <form id={this.id} name={this.name} className={this.styles['__forms']} onSubmit={(e) => this.submitFunction(e)}>
+                        <SimpleGrid columns={1} spacing={10}>
+                            <Box>
 
-                <form id={this.id} name={this.name} className={this.styles['__forms']} onSubmit={(e) => this.submitFunction(e)}>
-                    <div className={`row`}>
-                        <div className={`${this.styles['__forms--fields']} col-md-12`}>
-                            <div className={this.styles['__forms--fields--wrapper']}>
-                                <input type="text" name="newFormname" placeholder="Nome do Formulário" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`row`}>
-                        {this.fields.map((field) => this.createListwrapper(field))}
+                                <Text mb='0px'>Nome do Formuláro</Text>
+                                <Input bg={'teal.100'} padding={'5'} type='text' name="newFormname" placeholder="Insira o nome do formulário aqui..." _placeholder={{ opacity: 0.3, color: 'gray.700' }} variant="flushed" />
 
-                    </div>
-                    <div className={`row ${this.styles['__forms--button']}`}>
-                        <button type="submit">
-                            Salvar
-                        </button>
-                        <button onClick={(e)=>this.clearFields(e)}>
-                            Limpar
-                        </button>
-                    </div>
-                </form>
+                            </Box>
 
-            </div>
+                            <Box>
+                                <SimpleGrid columns={'2'} spacing={'10'}>
+                                    {this.fields.map((field) => this.createListwrapper(field))}
+                                </SimpleGrid>
+                            </Box>
+                            <Box>
+                                <Button type="submit" colorScheme='teal' size='md' marginEnd={'5'}>Salvar</Button>
+                                <Button type="submit" colorScheme='red' size='md' onClick={(e) => this.clearFields(e)}>Limpar</Button>
+
+                            </Box>
+                        </SimpleGrid>
+                    </form>
+                </Box>
+            </Container>
         )
     }
 
     createListwrapper(field) {
         if (field.type == 'text' || field.type == 'number') {
             return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-md-${field.columns}`}>
-                    <label>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <input type={field.type} name={field.name} disabled />
-                        <button className={this.styles['__removeButton']} onClick={() => this.deleteField(field)}></button>
-                    </div>
-                </div>
-            )
-        }
-        else if (field.type == 'select') {
-            return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-${field.columns}`}>
-                    <label>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <select name={field.name} value={field.value}>
-                            {this.list.map((item) => {
-                                return (
-                                    <option key={item.id} value={item.value}>{item.label}</option>
-                                )
-                            })}
-                        </select>
-                        <button className={this.styles['__removeButton']} onClick={() => this.deleteField(field)}></button>
-                    </div>
+                <Box key={field.id} id={field.id} >
+                    <Text>{field.label}</Text>
+                    <Flex>
+                        <Box width={'90%'}>
+                            <Input focusBorderColor={'teal.100'} bg={'teal.200'} size={'sm'} borderRadius={'5px'} type={field.type} variant={'outline'} name={field.name} disabled />
+                        </Box>
+                        <Box width={'10%'} marginStart={'1'}>
+                            <IconButton icon={<MinusIcon />} colorScheme={'red'} size={'sm'} onClick={() => this.deleteField(field)}></IconButton>
+                        </Box>
+                    </Flex>
 
-                </div>
+
+                </Box>
             )
         }
         else {
             return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-${field.columns}`}>
-                    <label>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <textarea name={field.name} value={field.value} disabled>
+                <Box key={field.id} id={field.id} >
+                    <Text>{field.label}</Text>
+                    <Flex>
+                        <Box width={'90%'}>
+                            <Textarea focusBorderColor={'teal.100'} bg={'teal.200'} size={'lg'} borderRadius={'5px'} name={field.name} value={field.value} disabled>
 
-                        </textarea>
-                        <button className={this.styles['__removeButton']} onClick={() => this.deleteField(field)}></button>
-                    </div>
+                            </Textarea>
 
-                </div>
+                        </Box>
+                        <Box width={'10%'} marginStart={'1'}>
+                            <IconButton icon={<MinusIcon />} colorScheme={'red'} size={'sm'} onClick={() => this.deleteField(field)}></IconButton>
+                        </Box>
+                    </Flex>
+
+                </Box>
             )
 
         }
@@ -186,7 +198,7 @@ export class ContainerFieldsFactory {
         this.setForms = this.setForms.filter((item) => item.id != id)
         this.listFormswrapper = this.createListformswrapper()
         this.updateView()
-        sendTostorage(this.name, this)     
+        sendTostorage(this.name, this)
     }
 
     updateValue(key, value) {

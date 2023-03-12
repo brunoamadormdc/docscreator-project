@@ -1,5 +1,6 @@
 import useDocument from '../../hooks/useDocument'
 import styles from './DocumentCreate.module.scss'
+import { Container, Heading } from '@chakra-ui/react'
 
 export default function DocumentCreate() {
 
@@ -7,9 +8,12 @@ export default function DocumentCreate() {
 
     return (
         <>
-            <div className={`container ${styles['__documentCreate']}`}>
-                Teste
-            </div>
+            <Container maxW={'container.lg'}>
+                {document.setFormsWrapper}
+                {document.choosenFormWrapper != null ? document.choosenFormWrapper : <></>}
+                {document.docTemplateWrapper != null ? document.docTemplateWrapper : <></>}
+                {document.listDocsWrapper != null ? document.listDocsWrapper : <></>}
+            </Container>
         </>
     )
 }

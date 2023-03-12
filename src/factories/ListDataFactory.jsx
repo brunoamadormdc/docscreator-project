@@ -1,3 +1,5 @@
+import { Flex, Heading, Select, Container, Box, SimpleGrid, Text, IconButton, Input, Button, Textarea } from "@chakra-ui/react"
+import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import Title from "../Components/UI/Title"
 import { DataFactory } from "./DataFactory"
 
@@ -6,10 +8,9 @@ export class ListDataFactory {
 
         let data_from_storage = JSON.parse(localStorage.getItem('data_from_docCreator'))
         let container_from_storage = JSON.parse(localStorage.getItem('general_factory_docCreator'))
-
         this.data = data_from_storage != undefined ? data_from_storage.data : []
-        this.container_id = data_from_storage != undefined ? data_from_storage.container_id : container_from_storage.id
-        this.container_name = data_from_storage != undefined ? data_from_storage.container_name : container_from_storage.name
+        this.container_id = data_from_storage != undefined ? data_from_storage.container_id : ''
+        this.container_name = data_from_storage != undefined ? data_from_storage.container_name : ''
         this.container_fields = { id: null, name: null, fields: [] }
         this.container_setForms = container_from_storage != undefined ? container_from_storage.setForms : []
         this.dataWrapper = null;
@@ -48,15 +49,17 @@ export class ListDataFactory {
     createChoosenWrapper() {
         return (
             <>
-                <div className={this.styles['--title']} > Selecione o tipo de formulário</div>
-                <select onChange={(e) => this.changeContainer(e)}>
-                    <option value="null">Selecionar</option>
-                    {this.container_setForms.map((item) => {
-                        return (
-                            <option key={item.id} value={item.id}>{item.name}</option>
-                        )
-                    })}
-                </select>
+                <Flex flexDirection={'column'} alignItems={'center'}>
+                    <Heading fontSize={'20'} marginBottom={'5'}>Selecione o tipo de formulário</Heading>
+                    <Select marginBottom={'10'} focusBorderColor={'teal.500'} variant='flushed' onChange={(e) => this.changeContainer(e)} placeholder={'Selecionar'}>
+
+                        {this.container_setForms.map((item) => {
+                            return (
+                                <option key={item.id} value={item.id}>{item.name}</option>
+                            )
+                        })}
+                    </Select>
+                </Flex>
             </>
         )
     }
@@ -67,17 +70,17 @@ export class ListDataFactory {
             <>
                 {this.container_fields.fields.length > 0 ?
                     <form id={this.id} name={this.name} className={this.styles['__forms']} onSubmit={(e) => this.submitFunction(e)}>
-                        <div className={`row`}>
+                        <SimpleGrid columns={2} spacing={3} borderRadius={5} padding={5} bg={'#eee'} border={'1px solid teal'}>
                             {this.container_fields.fields.map((field) => this.createListwrapper(field))}
 
-                        </div>
-                        <div className={`row ${this.styles['__forms--button']}`}>
-                            <button type="submit">
+                        </SimpleGrid>
+                        
+                            <Button marginTop={5} spac colorScheme='teal' size='md' marginEnd={'5'} type="submit">
                                 Salvar
-                            </button>
-                           
+                            </Button>
 
-                        </div>
+
+                        
                     </form>
                     : null}
             </>
@@ -100,31 +103,13 @@ export class ListDataFactory {
 
         if (field.type == 'text' || field.type == 'number') {
             return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-md-${field.columns}`}>
-                    <label htmlFor={field.id}>{field.name}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <input type={field.type} name={field.name} defaultValue={field.value} onChange={(e) => this.changeSelectfieldvalue(e, field.id)} />
+                <Box key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-md-${field.columns}`}>
+                    <Text>{field.name}</Text>
 
-                    </div>
-                </div>
-            )
-        }
-        else if (field.type == 'select') {
-            return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-${field.columns}`}>
-                    <label htmlFor={field.id}>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <select name={field.name} defaultValue={field.value} onChange={(e) => this.changeSelectfieldvalue(e, field)}>
-                            {this.list.map((item) => {
-                                return (
-                                    <option key={item.id} value={item.value}>{item.label}</option>
-                                )
-                            })}
-                        </select>
+                    <Input bg={'teal.100'} type={field.type} name={field.name} defaultValue={field.value} onChange={(e) => this.changeSelectfieldvalue(e, field.id)} />
 
-                    </div>
 
-                </div>
+                </Box>
             )
         }
         else {
@@ -150,45 +135,21 @@ export class ListDataFactory {
 
         if (field.type == 'text' || field.type == 'number') {
             return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-md-${field.columns}`}>
-                    <label htmlFor={field.id}>{field.name}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <input type={field.type} name={field.name} defaultValue={field.value} onBlur={(e) => this.editSelectfieldvalue(e, data_id, field.id)} />
-
-                    </div>
-                </div>
-            )
-        }
-        else if (field.type == 'select') {
-            return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-${field.columns}`}>
-                    <label htmlFor={field.id}>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <select name={field.name} defaultValue={field.value} onChange={(e) => this.editSelectfieldvalue(e, data_id, field)}>
-                            {this.list.map((item) => {
-                                return (
-                                    <option key={item.id} value={item.value}>{item.label}</option>
-                                )
-                            })}
-                        </select>
-
-                    </div>
-
-                </div>
+                <Box key={field.id} id={field.id}>
+                    <Text>{field.name}</Text>
+                    <Input bg={'teal.100'} padding={'5'} type={field.type} name={field.name} defaultValue={field.value} onBlur={(e) => this.editSelectfieldvalue(e, data_id, field.id)} />
+                </Box>
             )
         }
         else {
             return (
-                <div key={field.id} id={field.id} className={`${this.styles['__forms--fields']} col-${field.columns}`}>
-                    <label htmlFor={field.id}>{field.label}</label>
-                    <div className={this.styles['__forms--fields--wrapper']}>
-                        <textarea name={field.name} defaultValue={field.value} onChange={(e) => this.changeSelectfieldvalue(e, data_id, field)}>
-                            {field.value}
-                        </textarea>
+                <Box key={field.id} id={field.id}>
+                    <Text>{field.label}</Text>
+                    <Textarea focusBorderColor={'teal.100'} bg={'teal.200'} size={'lg'} borderRadius={'5px'} name={field.name} value={field.value} disabled>
 
-                    </div>
+                    </Textarea>
 
-                </div>
+                </Box>
             )
 
         }
@@ -207,7 +168,7 @@ export class ListDataFactory {
                     }
                     return field
                 })
-                
+
             }
             return item
         })
@@ -231,36 +192,41 @@ export class ListDataFactory {
             <>
                 <Title title={'Editar Dados'} subtitle={'Filtre e edite os dados criados'}></Title>
 
-                <div className={`container`}>
+                <Container maxW="container.lg" borderRadius={'5px'}>
                     {this.data.length > 0 ?
                         this.data.map((item) => {
                             return (
-                                <div key={item.id}>
-                                    <div className={this.styles['__dataContainer']} onClick={() => this.enableDataitem(item.id)}>
-                                        <div className={this.styles['__dataContainer--remove']}>
-                                            <button className={this.styles['__removeButton']} onClick={(e) => this.removeDataitem(e, item.id)}></button>
-                                        </div>
-                                        {item.container_name} - {item.fields[0].name}: {item.fields[0].value}
-                                    </div>
+                                <Box marginBottom='5' key={item.id}>
+                                    <Flex cursor='pointer' color="#fff" padding="3" backgroundColor="teal" align='center' onClick={() => this.enableDataitem(item.id)}>
+
+                                        <Box width={'95%'}>
+                                            <Text mb='0px'>{item.container_name} - {item.fields[0].name}: {item.fields[0].value}</Text>
+                                        </Box>
+
+                                        <Box width={'5%'}>
+                                            <IconButton icon={<MinusIcon />} colorScheme={'red'} size={'sm'} onClick={(e) => this.removeDataitem(e, item.id)}></IconButton>
+                                        </Box>
+
+                                    </Flex>
                                     {item.enabled ?
                                         <form id={item.id} name={item.id} className={this.styles['__forms']} onSubmit={(e) => this.editFunction(e)}>
-                                            <div className={this.styles['__dataContainer--fields']}>
-                                                <div className="row">
-                                                    {item.fields.map((field) => this.createEditwrapper(field, item.id))}
-                                                </div>
-                                                <div className={this.styles['row __dataContainer--buttons']}>
-                                                    <button className={this.styles['__dataContainer--buttons--save']} type="submit">Salvar</button>
-                                                    <button className={this.styles['__dataContainer--buttons--save']} onClick={()=> this.duplicateData(item)}>Duplicar</button>
-                                                </div>
-                                            </div>
+                                            <SimpleGrid borderBottomEndRadius={5} borderBottomStartRadius={5} padding={5} bg={'#eee'} columns={1} spacing={3}>
+
+                                                {item.fields.map((field) => this.createEditwrapper(field, item.id))}
+
+                                                <Flex>
+                                                    <Button type="submit" colorScheme='teal' size='md' marginEnd={'5'}>Salvar</Button>
+                                                    <Button type="submit" colorScheme='red' size='md' onClick={() => this.duplicateData(item)}>Duplicar</Button>
+                                                </Flex>
+                                            </SimpleGrid>
 
                                         </form>
                                         : null}
-                                </div>
+                                </Box>
                             )
                         })
                         : null}
-                </div>
+                </Container>
 
             </>
         )
@@ -287,7 +253,7 @@ export class ListDataFactory {
         let id = e.target.value
         if (id != 'null') {
             this.container_fields = this.container_setForms.filter((item) => item.id == id)[0]
-           
+
         }
         else {
             this.container_fields = { id: null, name: null, fields: [] }

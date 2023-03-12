@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
 import App from './App';
 import {
   RecoilRoot,
 } from 'recoil';
+import { ChakraProvider } from '@chakra-ui/react'
 /* import reportWebVitals from './reportWebVitals'; */
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +12,9 @@ root.render(
   <React.StrictMode>
     <RecoilRoot>
       <React.Suspense fallback={<div>Loading...</div>}>
-        <App />
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
       </React.Suspense>
     </RecoilRoot>
   </React.StrictMode>
